@@ -1,0 +1,25 @@
+server:
+  listen_addr: "0.0.0.0:8000" # the http listen address
+  elastic_url: "http://192.168.0.4:9200" # the elastic search url
+  document_name: "email" # the document name for elastic and firebase
+  firebase_creds: "creds/key.json" # the credential files for firebase
+  es_match_fields: ["title", "content"] # multiple fields for elastic search
+
+log:
+  output_level: "info" # the log level with value in [debug, info, warn, error]
+  output_path: "stdout" # a file system path to write the log data to
+  rotation_path: "./logs/mail-achive.log" # the path to a rotating log file
+  rotation_max_size: 100 # the maximum size in megabytes of a log file before it get rotated. It defaults to 100 megabytes.
+  rotation_max_age: 30 # the maximum number of days to retain old log files based on the timestamp encoded in their filename
+  rotation_max_backups: 1000 # the maximum number of old log files to retain
+  json_encoding: false # whether the log is formatted as JSON
+
+users: # define the users for this website
+  "tm-de":
+    username: "tm-de"
+    password: "archiv14"
+    manager: false
+  "admin":
+    username: "admin"
+    password: "archiv"
+    manager: true

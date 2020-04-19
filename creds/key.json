@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tiermedizin-forum-dev",
+  "private_key_id": "adc91135d4d6be1772be35689befafa6b3fc972e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEugIBADANBgkqhkiG9w0BAQEFAASCBKQwggSgAgEAAoIBAQDoppHQ3+IKg57P\nDD8jpSekXiqSlweReNyJZ21pBq1G4P4j5l5l63a16Z7VmjRrOJSlrBr6zLDEDFNg\ndzFbO5hwZzra3nmymTJRkx5Cyi5F3HYj6h3x7HurWQU4SYNyIW0rQbcDc8wD9CGb\ntHJcBgSxSbQJCWDYa9T8CmOhYVyitkfZKYK9N1MkDzC8bTbEhZrpnTnU8wBY0cf8\nxcHVwlW8lNyh+CwB2XMGVbFSngIJO89IJA9z5qvuPhQT2GL4exXOgyU+mDKpWC0U\nLMFpu9WC/SPF6L+AAYszNJ8sBKk6O4Wbs1feJ0h/OS/UJSdzh9lhle8MBZly+riz\nILI/MwZbAgMBAAECgf88cdKQm4ka6mJQBCuT2FNl63hnpi4H1mVYeUGfbNvmGNU3\nmFbe64l7fRvA1ip8zdl7BYL0+vDzVSnCSORt9z4J//Ji3Ojh+vwAyaSxJpZyc+tJ\nfbfUulQZMrqt+uKlFb/kJlRvKb5bacIhF7al7d/s67O0b1DSUE6otfamNMZecVEp\n1v1564kJWFNnA/67ounc2ww38MQ0m2y2QSS8XHDJZA62FxHMgR3wMCLfei1jhfHz\nNkOBZna9Z8eOY+VZ0kShnZg4Us4Wf6a7U9dctvyQx+Hp12rVneLiQ52t6UxCjrOF\nP0LjrEcgRIfamDxKb09P0KD/UJ6jl1etU0Z4MQECgYEA9Tr6bifNEM86jrp5uHss\ntPABUTWTAOIxcvw3LampetMtpIUOZi/PoNlT12Kuq2tDHXxE/arnNB53vBxsY/Bt\nbgSLa8X9lMDxQ/6A5oR9fFMeSI/TO5WiZvu1XgzMbaHjlLRXlejebrDPHB6ONeQh\n9lUnMvurRuvIp+BoBDrirVsCgYEA8t4psI4NuZbY/3lcjoaAspJeXtnT/DmKEQ8x\nqsqEjjkFDF3Eiaz3tUV16zGFS3KQ6hP0EQ8bI0wfUN+Rn0myUFwHT+cipSq/Et5R\nNj6Riho/yrebEfQUa1dd0cMZtFDDUNAvyk/tcZMDtmV02r3MGK5u+OIcECEHX8FX\nb3vjWwECgYAIlmskpmIo/4jGbMNMcYvMPkddh6nBMyqWIzzvbWyQ74o+o6Ywb+Yu\ndM3Z0gvZ1uS/yJVF6NE14wdAYCJvkYDThHc5a/KIXgVU4zmyWNtoGiUKV3cHNCM+\nxfvA8mPKRwwILhSPHFuFts1Z57wFKRsDXFIGGAgUcLdTIami1EkR1wKBgEb3X9s1\nRxFp4LKV9dO3vbdwSZ8Rq33SGmPtuqebUax1QOJiK+HG5wLS7yfwanCnY2zis7ig\nX1+rCKOLEHQpBq+wlHpmoZr9qKOMztI46jIehXFowSk31xeeic2XYtVrnAbrLmvB\nezJqsPUFJGYee5rirY6QE38rB4qVZkUvQDoBAoGAF6HobKHuFPUjQ5S8ZMMYvcbe\nXwe/4nDEZ9abmM2woOu61s983f96WHx46TDcrOtNqjBTo6V9iN0XR1h1UoWxbW/+\nBT4FUqAGdWtFrAExE96IIzxqXlhZT2oNv7dNFYRmG3pgjXpOx9ASmGqsLGkiutw7\nVfZzpWWFpfodoER0H/s=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-999r5@tiermedizin-forum-dev.iam.gserviceaccount.com",
+  "client_id": "100459999358634239379",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-999r5%40tiermedizin-forum-dev.iam.gserviceaccount.com"
+}
