@@ -22,7 +22,7 @@ type EmailResponse struct {
 	From      string `json:"from"`
 	CreatedAt string `json:"created_at"`
 	Title     string `json:"title"`
-	Content   string `json:"-"`
+	Content   string `json:"content"`
 }
 
 // format the reponse emails
