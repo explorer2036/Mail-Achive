@@ -4,6 +4,7 @@ server:
   document_name: "email" # the document name for elastic and firebase
   firebase_creds: "creds/key.json" # the credential files for firebase
   es_match_fields: ["title", "content"] # multiple fields for elastic search
+  flush_limit_number: 20 # limit number when syncing the firebase data to elastic
 
 log:
   output_level: "info" # the log level with value in [debug, info, warn, error]

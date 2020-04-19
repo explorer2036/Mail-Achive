@@ -55,7 +55,7 @@ func (s *Server) search(c *gin.Context) {
 	// search the elastic with the fileter fields
 	emails, err := s.elasticHandler.Search(c.Request.Context(), u.Query, u.Skip, u.Take)
 	if err != nil {
-		send(c, http.StatusInternalServerError, fmt.Sprintf("elastic search: %v", err))
+		send(c, http.StatusInternalServerError, fmt.Sprintf("Elastic search: %v", err))
 		return
 	}
 	c.JSON(http.StatusOK, format(emails))

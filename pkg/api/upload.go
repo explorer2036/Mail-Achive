@@ -32,7 +32,7 @@ func (s *Server) upload(c *gin.Context) {
 		if err := s.unzip(path); err != nil {
 			send(c, http.StatusInternalServerError, fmt.Sprintf("Unzip: %v", err))
 		} else {
-			send(c, http.StatusOK, fmt.Sprintf("%s is uploaded", file.Filename))
+			send(c, http.StatusOK, fmt.Sprintf("Upload %s success", file.Filename))
 		}
 	}
 }

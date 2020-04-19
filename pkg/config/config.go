@@ -14,6 +14,7 @@ type serverStruct struct {
 	FirebaseCreds string   `yaml:"firebase_creds"`
 	DocumentName  string   `yaml:"document_name"`
 	MatchFields   []string `yaml:"es_match_fields"`
+	LimitNumber   int      `yaml:"flush_limit_number"`
 }
 
 // log fields

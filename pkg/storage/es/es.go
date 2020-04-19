@@ -7,6 +7,7 @@ import (
 	"Mail-Achive/pkg/utils"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
@@ -16,6 +17,33 @@ import (
 const (
 	// defaultElasticHealthCheck - health check time for elastic
 	defaultElasticHealthCheck = 60
+
+	// he index mapping string
+	mapping = `{
+		"settings":{
+			"number_of_shards":1,
+			"number_of_replicas":0
+		},
+		"mappings":{
+			"properties":{
+				"name":{
+					"type":"text"
+				},
+				"from":{
+					"type":"text"
+				},
+				"created_at":{
+					"type":"date"
+				},
+				"title":{
+					"type":"text"
+				},
+				"content": {
+					"type":"text"
+				}
+			}
+		}
+	}`
 )
 
 // Handler for elastic search
@@ -46,23 +74,19 @@ func NewHandler(settings *config.Config) *Handler {
 	if err != nil {
 		panic(err)
 	}
+	s.client = client
 
 	// getting the ES version number is quite common, so there's a shortcut
 	version, err := client.ElasticsearchVersion(s.url)
 	if err != nil {
 		panic(err)
 	}
-	log.Infof("elasticsearch version: %v", version)
+	log.Infof("Elasticsearch version: %v", version)
 
-	// check if the specified index exists
-	exists, err := client.IndexExists(s.document).Do(s.ctx)
-	if err != nil {
+	// create the index if the specified index is not existed
+	if err := s.CreateIndex(); err != nil {
 		panic(err)
 	}
-	if !exists {
-		panic("elastic index 'email' not exist")
-	}
-	s.client = client
 
 	return s
 }
@@ -122,4 +146,26 @@ func (s *Handler) Search(ctx context.Context, query string, skip int, take int) 
 	}
 
 	return emails, nil
+}
+
+// CreateIndex checks if the index is existed, if not, create a new index
+func (s *Handler) CreateIndex() error {
+	// check if the specified index exists
+	exists, err := s.client.IndexExists(s.document).Do(s.ctx)
+	if err != nil {
+		return err
+	}
+	if !exists {
+		// create the index
+		createIndex, err := s.client.CreateIndex(s.document).BodyString(mapping).Do(s.ctx)
+		if err != nil {
+			return err
+		}
+		if !createIndex.Acknowledged {
+			return errors.New("Not acknowledged for CreateIndex")
+		}
+		log.Infof("Elastic index %s is created", s.document)
+	}
+
+	return nil
 }

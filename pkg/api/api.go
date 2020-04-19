@@ -70,6 +70,9 @@ func (s *Server) initRoutes() {
 	// http api: search
 	s.router.POST("/search", s.auth(), s.search)
 
+	// http api: flush
+	s.router.GET("/flush", s.auth(), s.flush)
+
 	// http api: upload file
 	s.router.POST("/upload", s.auth(), s.upload)
 }
