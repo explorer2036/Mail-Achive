@@ -1,0 +1,67 @@
+## project structure
+
+#/bin/bash
+├── pkg
+│   ├── api              ### the http api implementation
+│   │   ├── api.go       ### init the server and http routes
+│   │   ├── auth.go      ### token authorization for calling api
+│   │   ├── flush.go     ### api: flush the firebase data to elastic search
+│   │   ├── handle.go    ### unzip and parse the emails
+│   │   ├── login.go     ### api: login with username and password, refresh a new token
+│   │   ├── search.go    ### api: search by text, skip and take
+│   │   └── upload.go    ### api: upload the zip file
+│   ├── config
+│   │   └── config.go    ### config structure for config.yml file
+│   ├── log              ### log model for project
+│   │   ├── config.go
+│   │   ├── default.go
+│   │   ├── lumberjack
+│   │   │   ├── chown.go
+│   │   │   ├── chown_linux.go
+│   │   │   └── lumberjack.go
+│   │   ├── options.go
+│   │   └── scope.go
+│   ├── model            ### the common structure, like Email
+│   │   └── model.go
+│   ├── storage
+│   │   ├── es
+│   │   │   └── es.go    ### how to operate the elastic search
+│   │   └── firebase
+│   │       └── firebase.go  ### how to operate the firebase database
+│   └── utils
+│       └── utils.go
+
+## installation
+
+1. prepare the config file first
+
+server:
+  listen_addr: "0.0.0.0:8000" # the http listen address                           ### listen address for the http server
+  elastic_url: "http://192.168.0.4:9200" # the elastic search url                 ### the elastic search url
+  document_name: "email" # the document name for elastic and firebase             ### the index name for firebase and elastic
+  firebase_creds: "creds/key.json" # the credential files for firebase            ### the credential files for firebase
+  es_match_fields: ["title", "content"] # multiple fields for elastic search      ### the multiple match fields for query elastic 
+  flush_limit_number: 20 # limit number when syncing the firebase data to elastic ### the limit number once for syncing firebase data to elastic
+
+log:
+  output_level: "info" # the log level with value in [debug, info, warn, error]
+  output_path: "stdout" # a file system path to write the log data to
+  rotation_path: "./logs/mail-achive.log" # the path to a rotating log file
+  rotation_max_size: 100 # the maximum size in megabytes of a log file before it get rotated. It defaults to 100 megabytes.
+  rotation_max_age: 30 # the maximum number of days to retain old log files based on the timestamp encoded in their filename
+  rotation_max_backups: 1000 # the maximum number of old log files to retain
+  json_encoding: false # whether the log is formatted as JSON
+
+users: # define the users for this website
+  "tm-de":
+    username: "tm-de"               ### normal username
+    password: "archiv14"
+    manager: false
+  "admin":
+    username: "admin"               ### administrator
+    password: "archiv"
+    manager: true
+
+2. start the server
+
+$ ./Mail-Achive serve
