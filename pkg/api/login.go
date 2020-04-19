@@ -72,7 +72,8 @@ func (s *Server) login(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"token": token,
+		"token":   token,
+		"manager": user.Manager,
 	})
 }
 
