@@ -8,6 +8,8 @@ import (
 	"io"
 	"strings"
 	"time"
+
+	"github.com/google/martian/log"
 )
 
 const (
@@ -80,7 +82,9 @@ func (s *Server) unzip(path string) error {
 		if err != nil {
 			return err
 		}
-		emails = append(emails, email)
+		if email != nil {
+			emails = append(emails, email)
+		}
 	}
 
 	// handle the emails
@@ -119,7 +123,8 @@ func (s *Server) parse(buffer *bytes.Buffer) (*model.Email, error) {
 			parts := strings.Split(line[len(timePrefix):], ",")
 			format, err := timeStr2Time(strings.TrimSpace(parts[1]))
 			if err != nil {
-				return nil, err
+				log.Errorf("invalid time format: %v", line)
+				return nil, nil
 			}
 			e.CreatedAt = *format
 		}
