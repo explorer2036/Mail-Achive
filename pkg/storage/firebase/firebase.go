@@ -106,7 +106,6 @@ func (s *Handler) Flush(handle func(emails []*model.Email) error) error {
 		// format the email structure
 		for _, doc := range docs {
 			emails = append(emails, &model.Email{
-				Name:      doc.Data()["Name"].(string),
 				From:      doc.Data()["From"].(string),
 				Title:     doc.Data()["Title"].(string),
 				CreatedAt: doc.Data()["CreatedAt"].(time.Time),

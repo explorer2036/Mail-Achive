@@ -6,7 +6,6 @@ import (
 
 // Email structure for achive
 type Email struct {
-	Name      string    `json:"name"`
 	From      string    `json:"from"`
 	CreatedAt time.Time `json:"created_at"`
 	Title     string    `json:"title"`

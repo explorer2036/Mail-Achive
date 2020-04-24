@@ -110,10 +110,7 @@ func (s *Server) parse(buffer *bytes.Buffer) (*model.Email, error) {
 		// Von: Claudia Fehrenberg [mailto:claudia.fehrenberg@gmx.de]
 		if strings.HasPrefix(line, fromPrefix) {
 			left := line[len(fromPrefix):]
-			parts := strings.Split(left, "[")
-			e.Name = strings.TrimSpace(parts[0])
-			addrs := strings.Split(parts[1], ":")
-			e.From = strings.TrimSuffix(strings.TrimSpace(addrs[1]), "]")
+			e.From = strings.TrimSpace(left)
 		}
 
 		// Gesendet: Freitag, 31. Januar 2014 13:59

@@ -18,7 +18,6 @@ type filter struct {
 
 // EmailResponse for the frontend
 type EmailResponse struct {
-	Name      string `json:"name"`
 	From      string `json:"from"`
 	CreatedAt string `json:"created_at"`
 	Title     string `json:"title"`
@@ -30,7 +29,6 @@ func format(emails []*model.Email) []EmailResponse {
 	result := []EmailResponse{}
 	for _, email := range emails {
 		result = append(result, EmailResponse{
-			Name:      email.Name,
 			From:      fromPrefix + " " + email.From,
 			Title:     titlePrefix + " " + email.Title,
 			CreatedAt: timePrefix + " " + email.CreatedAt.Format(time.RFC1123),
