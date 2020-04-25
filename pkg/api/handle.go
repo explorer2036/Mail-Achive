@@ -35,10 +35,17 @@ var germanyMonths = map[string]string{
 	"Dezember":  "Dec",
 }
 
+// Gesendet: Dienstag, 28. Januar 2014 um 13:26 Uhr
+// Gesendet: Freitag, 31. Januar 2014 13:59
+// Gesendet: Freitag, 1. Januar 2014 13:59
 func timeStr2Time(ts string) (*time.Time, error) {
 	parts := strings.Split(ts, " ")
-	if len(parts) != 4 {
+	if len(parts) != 4 && len(parts) != 6 {
 		return nil, fmt.Errorf("invalid time format: %s(%d)", ts, len(parts))
+	}
+	if len(parts) == 6 {
+		parts[3] = parts[4]
+		parts = parts[0:4]
 	}
 	day, err := strconv.Atoi(strings.TrimSuffix(parts[0], "."))
 	if err != nil {
