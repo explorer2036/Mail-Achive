@@ -1,6 +1,7 @@
 package api
 
 import (
+	"Mail-Achive/pkg/log"
 	"fmt"
 	"net/http"
 	"os"
@@ -28,11 +29,14 @@ func (s *Server) upload(c *gin.Context) {
 		// remove the temporary files
 		defer os.RemoveAll(path)
 
+		start := time.Now()
 		// unzip and read the email files
-		if err := s.unzip(path); err != nil {
+		err := s.unzip(path)
+		if err != nil {
 			send(c, http.StatusInternalServerError, fmt.Sprintf("Unzip: %v", err))
 		} else {
 			send(c, http.StatusOK, fmt.Sprintf("Upload %s success", file.Filename))
 		}
+		log.Infof("Handle upload file %s, %d, %v", file.Filename, file.Size, time.Since(start))
 	}
 }
