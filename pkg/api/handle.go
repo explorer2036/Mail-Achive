@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strconv"
 	"strings"
 	"time"
 
@@ -39,7 +40,12 @@ func timeStr2Time(ts string) (*time.Time, error) {
 	if len(parts) != 4 {
 		return nil, fmt.Errorf("invalid time format: %s(%d)", ts, len(parts))
 	}
-	parts[0] = strings.TrimSuffix(parts[0], ".")
+	day, err := strconv.Atoi(strings.TrimSuffix(parts[0], "."))
+	if err != nil {
+		return nil, err
+	}
+	parts[0] = fmt.Sprintf("%02d", day)
+
 	parts[1], _ = germanyMonths[strings.TrimSpace(parts[1])]
 	joined := strings.Join(parts, " ")
 	parsed, err := time.Parse("02 Jan 2006 15:04", joined)
