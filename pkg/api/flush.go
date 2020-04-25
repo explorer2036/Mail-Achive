@@ -29,7 +29,7 @@ func (s *Server) flush(c *gin.Context) {
 		return
 	}
 
-	log.Infof("Flush firebase to elastic: %d", time.Since(start))
+	log.Infof("Flush firebase to elastic: %v", time.Since(start))
 
 	send(c, http.StatusOK, "Flush firebase to elastic success")
 }
