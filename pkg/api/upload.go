@@ -37,6 +37,6 @@ func (s *Server) upload(c *gin.Context) {
 		} else {
 			send(c, http.StatusOK, fmt.Sprintf("Upload %s success", file.Filename))
 		}
-		log.Infof("Handle upload file %s, %d, %v", file.Filename, file.Size, time.Since(start))
+		log.Infof("Handle upload file %s, %d, %v: %v", file.Filename, file.Size, time.Since(start), err)
 	}
 }

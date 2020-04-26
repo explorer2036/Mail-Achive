@@ -3,7 +3,7 @@ package api
 import (
 	"Mail-Achive/pkg/model"
 	"archive/zip"
-	"bytes"
+	"bufio"
 	"fmt"
 	"io"
 	"strconv"
@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/google/martian/log"
+	"golang.org/x/text/encoding/charmap"
 )
 
 const (
@@ -73,25 +74,25 @@ func (s *Server) unzip(path string) error {
 	emails := []*model.Email{}
 	// loop the email files in zip files
 	for _, file := range reader.File {
+		// check if it's a directory
 		if file.FileInfo().IsDir() {
 			continue
 		}
 
-		fileReader, err := file.Open()
+		// open the file
+		fd, err := file.Open()
 		if err != nil {
 			return err
 		}
-		defer fileReader.Close()
+		defer fd.Close()
 
-		size := int64(file.UncompressedSize64)
-		data := make([]byte, size)
-		buffer := bytes.NewBuffer(data)
-		if _, err := io.CopyN(buffer, fileReader, size); err != nil {
-			return err
-		}
+		// new a file reader with europe standard
+		reader := charmap.ISO8859_1.NewDecoder().Reader(fd)
+		// new a buffer reader
+		br := bufio.NewReader(reader)
 
 		// parse the email content to structure
-		email, err := s.parse(buffer)
+		email, err := s.parse(br)
 		if err != nil {
 			return err
 		}
@@ -109,21 +110,20 @@ func (s *Server) unzip(path string) error {
 }
 
 // parse the email content to normal fields
-func (s *Server) parse(buffer *bytes.Buffer) (*model.Email, error) {
+func (s *Server) parse(br *bufio.Reader) (*model.Email, error) {
 	e := &model.Email{}
 
 	// loop the buffer reader, and read line one by one
 	for {
-		line, err := buffer.ReadString('\n')
+		data, _, err := br.ReadLine()
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
 			return nil, fmt.Errorf("parse buffer: %v", err)
 		}
-		runeLine := []rune(line)
+		line := strings.TrimSpace(string(data))
 
-		line = strings.TrimSpace(string(runeLine))
 		// Von: Claudia Fehrenberg [mailto:claudia.fehrenberg@gmx.de]
 		if strings.HasPrefix(line, fromPrefix) {
 			left := line[len(fromPrefix):]
@@ -148,9 +148,12 @@ func (s *Server) parse(buffer *bytes.Buffer) (*model.Email, error) {
 			e.Title = strings.TrimSpace(line[len(titlePrefix):])
 
 			// read the left email body as content
-			// the email file content, use the []rune to solve the invalid UTF-8 characters
-			content := []rune(strings.TrimSpace(buffer.String()))
-			e.Content = string(content)
+			left := make([]byte, br.Buffered())
+			if _, err := br.Read(left); err != nil {
+				log.Errorf("buffer reader the left data: %v", err)
+				return nil, err
+			}
+			e.Content = string(left)
 		}
 	}
 	return e, nil
