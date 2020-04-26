@@ -101,19 +101,17 @@ func (s *Handler) Bulk(emails []*model.Email) error {
 		return nil
 	}
 
-	go func() {
-		// upset the email content into elastic
-		bulk := s.client.Bulk().Index(s.document)
-		for _, email := range emails {
-			// md5 the content as the id
-			id := utils.MD5Str(email.Content)
-			bulk.Add(elastic.NewBulkIndexRequest().Id(id).Doc(email))
-		}
+	// upset the email content into elastic
+	bulk := s.client.Bulk().Index(s.document)
+	for _, email := range emails {
+		// md5 the content as the id
+		id := utils.MD5Str(email.Content)
+		bulk.Add(elastic.NewBulkIndexRequest().Id(id).Doc(email))
+	}
 
-		if _, err := bulk.Do(s.ctx); err != nil {
-			log.Errorf("upset the elastic document: %v", err)
-		}
-	}()
+	if _, err := bulk.Do(s.ctx); err != nil {
+		log.Errorf("upset the elastic document: %v", err)
+	}
 
 	return nil
 }
