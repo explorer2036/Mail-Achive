@@ -87,7 +87,7 @@ func (s *Server) unzip(path string) error {
 		defer fd.Close()
 
 		// new a file reader with europe standard
-		reader := charmap.ISO8859_1.NewDecoder().Reader(fd)
+		reader := charmap.ISO8859_15.NewDecoder().Reader(fd)
 		// new a buffer reader
 		br := bufio.NewReader(reader)
 
